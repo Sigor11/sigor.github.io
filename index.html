@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1RM 계산기</title>
+
+```
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #f1f3f5;
+        color: #222;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        padding: 20px;
+    }
+
+    .calculator {
+        width: 100%;
+        max-width: 420px;
+        background: white;
+        padding: 30px;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    }
+
+    h1 {
+        text-align: center;
+        margin-top: 0;
+        margin-bottom: 8px;
+    }
+
+    .description {
+        text-align: center;
+        color: #777;
+        margin-bottom: 28px;
+    }
+
+    label {
+        display: block;
+        margin-top: 18px;
+        margin-bottom: 8px;
+        font-weight: bold;
+    }
+
+    input {
+        width: 100%;
+        padding: 13px;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        font-size: 16px;
+    }
+
+    button {
+        width: 100%;
+        padding: 15px;
+        margin-top: 25px;
+        border: none;
+        border-radius: 10px;
+        background: #2563eb;
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background: #1d4ed8;
+    }
+
+    .result {
+        display: none;
+        margin-top: 25px;
+        padding: 20px;
+        background: #eff6ff;
+        border-radius: 12px;
+        text-align: center;
+    }
+
+    .result h2 {
+        margin: 0 0 10px;
+        color: #1d4ed8;
+    }
+
+    .one-rm {
+        font-size: 32px;
+        font-weight: bold;
+        margin: 10px 0 20px;
+    }
+
+    .training {
+        text-align: left;
+        line-height: 1.8;
+    }
+
+    .error {
+        color: #dc2626;
+        font-size: 14px;
+        margin-top: 12px;
+        text-align: center;
+    }
+</style>
+```
+
+</head>
+
+<body>
+
+```
+<div class="calculator">
+    <h1>1RM 계산기</h1>
+    <p class="description">운동 중량으로 예상 1RM을 계산해 보세요</p>
+
+    <label for="weight">사용 중량 (kg)</label>
+    <input type="number" id="weight" placeholder="예: 50" min="0.1" step="0.1">
+
+    <label for="reps">반복 횟수</label>
+    <input type="number" id="reps" placeholder="예: 12" min="1" max="30" step="1">
+
+    <button onclick="calculate1RM()">1RM 계산하기</button>
+
+    <div id="error" class="error"></div>
+
+    <div id="result" class="result">
+        <h2>예상 1RM</h2>
+        <div class="one-rm" id="oneRM">0 kg</div>
+
+        <div class="training">
+            <strong>훈련 중량 추천</strong>
+            <div id="trainingWeights"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function calculate1RM() {
+        const weight = Number(document.getElementById("weight").value);
+        const reps = Number(document.getElementById("reps").value);
+
+        const error = document.getElementById("error");
+        const result = document.getElementById("result");
+
+        error.textContent = "";
+        result.style.display = "none";
+
+        if (!weight || !reps || weight <= 0 || reps < 1 || reps > 30) {
+            error.textContent = "중량과 반복 횟수를 올바르게 입력해 주세요.";
+            return;
+        }
+
+        // Epley 공식
+        const oneRM = weight * (1 + reps / 30);
+
+        const rounded1RM = Math.round(oneRM * 10) / 10;
+
+        document.getElementById("oneRM").textContent =
+            rounded1RM + " kg";
+
+        const percentages = [60, 70, 80, 85, 90];
+
+        let trainingHTML = "";
+
+        percentages.forEach(percent => {
+            const trainingWeight = Math.round(oneRM * percent / 100 * 10) / 10;
+
+            trainingHTML += `
+                <div>
+                    ${percent}% : ${trainingWeight} kg
+                </div>
+            `;
+        });
+
+        document.getElementById("trainingWeights").innerHTML = trainingHTML;
+
+        result.style.display = "block";
+    }
+</script>
+```
+
+</body>
+</html>
