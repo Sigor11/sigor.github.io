@@ -1,12 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
-  <url>
-    <loc>https://Sigor11.github.io/</loc>
-  </url>
+    <url>
+        <loc>https://seoyeol123.github.io/</loc>
+    </url>
 
-  <url>
-    <loc>https://Sigor11.github.io/privacy.html</loc>
-  </url>
+    <url>
+        <loc>https://seoyeol123.github.io/privacy.html</loc>
+    </url>
+
+    <url>
+        <loc>https://seoyeol123.github.io/bench-press-1rm.html</loc>
+    </url>
+
+    <url>
+        <loc>https://seoyeol123.github.io/squat-1rm.html</loc>
+    </url>
+
+    <url>
+        <loc>https://seoyeol123.github.io/deadlift-1rm.html</loc>
+    </url>
+
+    <url>
+        <loc>https://seoyeol123.github.io/1rm-training-percentages.html</loc>
+    </url>
 
 </urlset>
