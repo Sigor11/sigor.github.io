@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://Sigor11.github.io/sitemap.xml
+Sitemap: https://sigor11.github.io/sitemap.xml
