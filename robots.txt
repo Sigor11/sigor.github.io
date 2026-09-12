@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://Sigor11.github.io/sitemap.xml
