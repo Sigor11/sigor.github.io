@@ -1,29 +1,45 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-T30RME56QC"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
+        gtag('js', new Date());
+        gtag('config', 'G-T30RME56QC');
+    </script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Bench Press 1RM Calculator - Estimate Your One Rep Max</title>
+    <title>1RM Calculator - One Rep Max Calculator</title>
 
     <meta
         name="description"
-        content="Calculate your estimated bench press one rep max (1RM) using your weight and repetitions. Free bench press 1RM calculator."
+        content="Calculate your estimated one rep max (1RM) for bench press, squat, deadlift and more. Save your workout history, calculate training weights and check your strength rank."
     >
 
     <meta
         name="keywords"
-        content="bench press 1RM calculator, bench press calculator, bench 1RM, one rep max calculator"
+        content="1RM calculator, one rep max calculator, bench press calculator, squat calculator, deadlift calculator, strength calculator, strength rank"
     >
 
     <meta name="robots" content="index, follow">
 
     <link
         rel="canonical"
-        href="https://sigor11.github.io/sigor.github.io/bench-press-1rm.html">
+        href="https://sigor11.github.io/sigor.github.io/"
     >
 
     <style>
+
         * {
             box-sizing: border-box;
             margin: 0;
@@ -34,16 +50,20 @@
             font-family: Arial, Helvetica, sans-serif;
             background: #0b0b0b;
             color: #f5f5f5;
-            line-height: 1.7;
+            line-height: 1.6;
         }
 
         header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(11, 11, 11, 0.95);
             border-bottom: 1px solid #222;
-            background: #0b0b0b;
+            backdrop-filter: blur(10px);
         }
 
         .nav {
-            max-width: 1000px;
+            max-width: 1100px;
             margin: auto;
             padding: 18px 20px;
             display: flex;
@@ -52,16 +72,15 @@
         }
 
         .logo {
-            color: #9cff00;
             font-size: 25px;
             font-weight: 800;
-            text-decoration: none;
+            color: #9cff00;
         }
 
         nav a {
             color: #aaa;
             text-decoration: none;
-            margin-left: 20px;
+            margin-left: 25px;
             font-size: 14px;
         }
 
@@ -70,86 +89,614 @@
         }
 
         .container {
-            max-width: 850px;
+            max-width: 1100px;
             margin: auto;
             padding: 0 20px;
         }
 
+        /* =========================
+           HERO
+        ========================= */
+
         .hero {
-            padding: 70px 0 40px;
+            padding: 80px 0 50px;
+            text-align: center;
         }
 
         .badge {
+            display: inline-block;
+            padding: 7px 13px;
+            border: 1px solid #303030;
+            border-radius: 30px;
             color: #9cff00;
             font-size: 12px;
             font-weight: bold;
             letter-spacing: 1px;
+            margin-bottom: 20px;
         }
 
-        h1 {
-            font-size: clamp(38px, 7vw, 65px);
-            line-height: 1.1;
-            margin: 15px 0;
+        .hero h1 {
+            font-size: clamp(42px, 7vw, 76px);
+            line-height: 1;
+            margin-bottom: 20px;
         }
 
-        h2 {
-            margin-top: 45px;
-            margin-bottom: 15px;
-            font-size: 28px;
-        }
-
-        h3 {
-            margin-top: 25px;
-            margin-bottom: 8px;
-        }
-
-        p {
+        .hero p {
+            max-width: 650px;
+            margin: auto;
             color: #999;
+            font-size: 17px;
         }
 
-        .box {
+        /* =========================
+           CALCULATOR
+        ========================= */
+
+        .calculator {
             background: #131313;
-            border: 1px solid #292929;
-            border-radius: 16px;
-            padding: 25px;
-            margin: 30px 0;
+            border: 1px solid #242424;
+            border-radius: 18px;
+            padding: 30px;
+            margin-bottom: 35px;
         }
 
-        .formula {
-            background: #0d0d0d;
-            border: 1px solid #292929;
-            padding: 20px;
+        .calculator h2 {
+            margin-bottom: 20px;
+        }
+
+        .exercise-buttons {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .exercise-btn {
+            background: #1d1d1d;
+            color: #aaa;
+            border: 1px solid #303030;
             border-radius: 10px;
-            color: #9cff00;
+            padding: 13px;
+            cursor: pointer;
             font-weight: bold;
-            text-align: center;
-            margin: 20px 0;
+            transition: 0.2s;
         }
 
-        .button {
-            display: inline-block;
-            margin-top: 20px;
+        .exercise-btn:hover {
+            border-color: #9cff00;
+            color: #fff;
+        }
+
+        .exercise-btn.active {
             background: #9cff00;
             color: #000;
-            padding: 13px 20px;
-            border-radius: 9px;
-            text-decoration: none;
+            border-color: #9cff00;
+        }
+
+        .input-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .input-group label {
+            display: block;
+            color: #aaa;
+            font-size: 14px;
+            margin-bottom: 7px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid #333;
+            background: #0b0b0b;
+            color: white;
+            font-size: 16px;
+            outline: none;
+        }
+
+        .input-group input:focus {
+            border-color: #9cff00;
+        }
+
+        .calculate-btn,
+        .save-btn {
+            width: 100%;
+            border: none;
+            border-radius: 10px;
+            padding: 15px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 18px;
+        }
+
+        .calculate-btn {
+            background: #9cff00;
+            color: #000;
+        }
+
+        .calculate-btn:hover {
+            background: #b2ff33;
+        }
+
+        .save-btn {
+            background: #222;
+            color: #9cff00;
+            border: 1px solid #3b3b3b;
+            display: none;
+        }
+
+        .save-btn:hover {
+            background: #292929;
+        }
+
+        .result {
+            display: none;
+            margin-top: 30px;
+        }
+
+        .result-box {
+            text-align: center;
+            background: #0d0d0d;
+            border: 1px solid #292929;
+            border-radius: 15px;
+            padding: 30px;
+        }
+
+        .result-label {
+            color: #888;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .one-rm {
+            font-size: 55px;
+            font-weight: 800;
+            color: #9cff00;
+            margin: 5px 0 20px;
+        }
+
+        .training-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .training-table th,
+        .training-table td {
+            padding: 12px;
+            border-bottom: 1px solid #222;
+            text-align: center;
+        }
+
+        .training-table th {
+            color: #888;
+            font-size: 13px;
+        }
+
+        .training-table td {
+            color: #ddd;
+        }
+
+        /* =========================
+           STRENGTH RANK
+        ========================= */
+
+        .strength-rank {
+            background: #131313;
+            border: 1px solid #242424;
+            border-radius: 18px;
+            padding: 30px;
+            margin-bottom: 35px;
+        }
+
+        .rank-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .rank-header .rank-badge {
+            display: inline-block;
+            color: #9cff00;
+            font-size: 12px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+        }
+
+        .rank-header h2 {
+            font-size: 30px;
+            margin-bottom: 8px;
+        }
+
+        .rank-header p {
+            color: #888;
+        }
+
+        .rank-input-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+
+        .rank-input-group label {
+            display: block;
+            color: #aaa;
+            font-size: 13px;
+            margin-bottom: 7px;
+        }
+
+        .rank-input-group input {
+            width: 100%;
+            padding: 14px;
+            border-radius: 10px;
+            border: 1px solid #333;
+            background: #0b0b0b;
+            color: white;
+            font-size: 15px;
+            outline: none;
+        }
+
+        .rank-input-group input:focus {
+            border-color: #9cff00;
+        }
+
+        .rank-calculate-btn {
+            width: 100%;
+            margin-top: 18px;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            background: #9cff00;
+            color: #000;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .rank-calculate-btn:hover {
+            background: #b2ff33;
+        }
+
+        .rank-result {
+            display: none;
+            margin-top: 25px;
+        }
+
+        .overall-rank {
+            text-align: center;
+            background: #0d0d0d;
+            border: 1px solid #292929;
+            border-radius: 15px;
+            padding: 30px;
+        }
+
+        .overall-label {
+            color: #777;
+            font-size: 12px;
+            letter-spacing: 2px;
             font-weight: bold;
         }
 
-        ul {
-            margin: 15px 0 0 25px;
-            color: #999;
+        .overall-tier {
+            color: #9cff00;
+            font-size: 48px;
+            font-weight: 900;
+            margin-top: 5px;
         }
 
-        li {
-            margin-bottom: 8px;
+        .overall-score {
+            color: #777;
+            margin-top: 5px;
+            font-size: 13px;
         }
+
+        .lift-results {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        .lift-card {
+            background: #0d0d0d;
+            border: 1px solid #292929;
+            border-radius: 14px;
+            padding: 20px;
+        }
+
+        .lift-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            color: #aaa;
+            font-size: 13px;
+        }
+
+        .lift-title strong {
+            color: #9cff00;
+            font-size: 13px;
+        }
+
+        .lift-ratio {
+            font-size: 30px;
+            font-weight: 800;
+            margin-top: 15px;
+        }
+
+        .lift-ratio-label {
+            color: #666;
+            font-size: 11px;
+        }
+
+        .rank-progress {
+            height: 6px;
+            width: 100%;
+            background: #242424;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 18px;
+        }
+
+        .rank-progress-bar {
+            height: 100%;
+            width: 0;
+            background: #9cff00;
+            transition: width 0.7s ease;
+        }
+
+        .next-tier {
+            color: #777;
+            font-size: 11px;
+            margin-top: 10px;
+        }
+
+        .total-strength {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        .total-box {
+            background: #0d0d0d;
+            border: 1px solid #292929;
+            border-radius: 14px;
+            padding: 18px;
+            text-align: center;
+        }
+
+        .total-box span {
+            display: block;
+            color: #666;
+            font-size: 11px;
+            margin-bottom: 5px;
+        }
+
+        .total-box strong {
+            font-size: 22px;
+        }
+
+        .tier-table {
+            margin-top: 25px;
+            border-top: 1px solid #222;
+            padding-top: 25px;
+        }
+
+        .tier-table h3 {
+            margin-bottom: 15px;
+        }
+
+        .tier-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 0;
+            border-bottom: 1px solid #1d1d1d;
+        }
+
+        .tier-row:last-child {
+            border-bottom: none;
+        }
+
+        .tier-icon {
+            width: 34px;
+            height: 34px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: #222;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        .tier-row strong {
+            display: block;
+            font-size: 14px;
+        }
+
+        .tier-row small {
+            color: #666;
+        }
+
+        /* =========================
+           BENCH PRESS LINK
+        ========================= */
+
+        .seo-links {
+            margin-top: 25px;
+            text-align: center;
+        }
+
+        .seo-links a {
+            display: inline-block;
+            color: #9cff00;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .seo-links a:hover {
+            text-decoration: underline;
+        }
+
+        /* =========================
+           WORKOUT HISTORY
+        ========================= */
+
+        .history {
+            background: #131313;
+            border: 1px solid #242424;
+            border-radius: 18px;
+            padding: 30px;
+            margin-bottom: 35px;
+        }
+
+        .history-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .history-header h2 {
+            margin: 0;
+        }
+
+        .clear-btn {
+            background: transparent;
+            color: #888;
+            border: 1px solid #333;
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .clear-btn:hover {
+            color: #ff6666;
+            border-color: #ff6666;
+        }
+
+        .empty-history {
+            color: #777;
+            text-align: center;
+            padding: 30px 10px;
+        }
+
+        .history-item {
+            background: #0d0d0d;
+            border: 1px solid #252525;
+            border-radius: 12px;
+            padding: 18px;
+            margin-bottom: 12px;
+        }
+
+        .history-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .history-exercise {
+            font-weight: bold;
+            font-size: 17px;
+        }
+
+        .history-date {
+            color: #777;
+            font-size: 12px;
+        }
+
+        .history-details {
+            color: #aaa;
+            margin-top: 7px;
+        }
+
+        .history-rm {
+            color: #9cff00;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+
+        .delete-btn {
+            margin-top: 12px;
+            background: transparent;
+            border: none;
+            color: #777;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .delete-btn:hover {
+            color: #ff6666;
+        }
+
+        /* =========================
+           ADVERTISEMENT
+        ========================= */
+
+        .ad-space {
+            min-height: 100px;
+            border: 1px dashed #333;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #555;
+            font-size: 12px;
+            letter-spacing: 1px;
+            margin: 35px 0;
+        }
+
+        /* =========================
+           CONTENT SECTIONS
+        ========================= */
+
+        .section {
+            padding: 60px 0;
+        }
+
+        .section h2 {
+            font-size: 30px;
+            margin-bottom: 15px;
+        }
+
+        .section p {
+            color: #999;
+            max-width: 800px;
+        }
+
+        .faq-item {
+            padding: 20px 0;
+            border-bottom: 1px solid #222;
+        }
+
+        .faq-item h3 {
+            margin-bottom: 7px;
+            font-size: 17px;
+        }
+
+        .faq-item p {
+            color: #888;
+        }
+
+        /* =========================
+           FOOTER
+        ========================= */
 
         footer {
             border-top: 1px solid #222;
-            margin-top: 70px;
-            padding: 30px;
+            margin-top: 50px;
+            padding: 30px 20px;
             text-align: center;
             color: #666;
             font-size: 13px;
@@ -158,134 +705,1963 @@
         footer a {
             color: #888;
             text-decoration: none;
+            margin: 0 8px;
         }
 
-        @media (max-width: 650px) {
+        footer a:hover {
+            color: #9cff00;
+        }
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 800px) {
+
             nav {
                 display: none;
             }
+
+            .hero {
+                padding-top: 55px;
+            }
+
+            .calculator,
+            .history,
+            .strength-rank {
+                padding: 20px;
+            }
+
+            .exercise-buttons {
+                grid-template-columns: 1fr;
+            }
+
+            .input-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .rank-input-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .lift-results {
+                grid-template-columns: 1fr;
+            }
+
+            .one-rm {
+                font-size: 43px;
+            }
+
+            .overall-tier {
+                font-size: 40px;
+            }
+
+            .training-table th,
+            .training-table td {
+                padding: 9px 5px;
+                font-size: 13px;
+            }
+
+            .history-top {
+                align-items: flex-start;
+                flex-direction: column;
+            }
         }
+
+        @media (max-width: 500px) {
+
+            .rank-input-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .total-strength {
+                grid-template-columns: 1fr;
+            }
+        }
+
     </style>
+
 </head>
 
 <body>
 
 <header>
+
     <div class="nav">
-        <a class="logo" href="index.html">1RM.</a>
+
+        <div class="logo">1RM.</div>
 
         <nav>
-            <a href="index.html">Calculator</a>
-            <a href="squat-1rm.html">Squat</a>
-            <a href="deadlift-1rm.html">Deadlift</a>
-            <a href="1rm-training-percentages.html">Training Guide</a>
+            <a href="#calculator">Calculator</a>
+            <a href="#strength-rank">Strength Rank</a>
+            <a href="#history">Workout History</a>
+            <a href="#about">About 1RM</a>
+            <a href="#faq">FAQ</a>
         </nav>
+
     </div>
+
 </header>
+
 
 <main>
 
+    <!-- =========================
+         HERO
+    ========================= -->
+
     <section class="hero">
+
         <div class="container">
 
-            <div class="badge">BENCH PRESS STRENGTH TOOL</div>
+            <div class="badge">
+                FREE STRENGTH TOOL
+            </div>
 
-            <h1>Bench Press 1RM Calculator</h1>
+            <h1>1RM Calculator</h1>
 
             <p>
-                Estimate your bench press one rep max using your weight
-                and repetition count.
+                Calculate your estimated one rep max and track your strength progress.
+                Simple, fast and completely free.
             </p>
 
-            <a class="button" href="index.html">
-                Calculate Your Bench Press 1RM
-            </a>
-
         </div>
+
     </section>
 
 
-    <section>
+    <!-- =========================
+         CALCULATOR
+    ========================= -->
+
+    <section id="calculator">
+
         <div class="container">
 
-            <h2>What Is a Bench Press 1RM?</h2>
+            <div class="calculator">
 
-            <p>
-                Your bench press 1RM, or one rep max, is the maximum amount
-                of weight you can theoretically lift for one repetition.
-                An estimated 1RM can be useful for tracking strength
-                and comparing training performance over time.
-            </p>
+                <h2>Calculate Your 1RM</h2>
+
+                <div class="exercise-buttons">
+
+                    <button
+                        class="exercise-btn active"
+                        onclick="selectExercise('Bench Press', this)"
+                    >
+                        Bench Press
+                    </button>
+
+                    <button
+                        class="exercise-btn"
+                        onclick="selectExercise('Squat', this)"
+                    >
+                        Squat
+                    </button>
+
+                    <button
+                        class="exercise-btn"
+                        onclick="selectExercise('Deadlift', this)"
+                    >
+                        Deadlift
+                    </button>
+
+                </div>
 
 
-            <h2>How Is Bench Press 1RM Calculated?</h2>
+                <div class="input-grid">
 
-            <p>
-                Our calculator uses the Epley formula to estimate your
-                one rep max from a submaximal set.
-            </p>
+                    <div class="input-group">
 
-            <div class="formula">
-                1RM = Weight × (1 + Reps ÷ 30)
+                        <label for="weight">
+                            Weight (kg)
+                        </label>
+
+                        <input
+                            id="weight"
+                            type="number"
+                            min="0"
+                            step="0.5"
+                            placeholder="Example: 60"
+                        >
+
+                    </div>
+
+
+                    <div class="input-group">
+
+                        <label for="reps">
+                            Reps
+                        </label>
+
+                        <input
+                            id="reps"
+                            type="number"
+                            min="1"
+                            max="30"
+                            placeholder="Example: 10"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    class="calculate-btn"
+                    onclick="calculate1RM()"
+                >
+                    Calculate 1RM
+                </button>
+
+
+                <!-- RESULT -->
+
+                <div class="result" id="result">
+
+                    <div class="result-box">
+
+                        <div class="result-label">
+                            Estimated One Rep Max
+                        </div>
+
+                        <div class="one-rm" id="oneRM">
+                            0 kg
+                        </div>
+
+
+                        <table class="training-table">
+
+                            <thead>
+
+                                <tr>
+                                    <th>Percentage</th>
+                                    <th>Weight</th>
+                                </tr>
+
+                            </thead>
+
+                            <tbody id="trainingTable"></tbody>
+
+                        </table>
+
+
+                        <button
+                            class="save-btn"
+                            id="saveBtn"
+                            onclick="saveWorkout()"
+                        >
+                            💾 Save Workout
+                        </button>
+
+                    </div>
+
+                </div>
+
             </div>
-
-
-            <div class="box">
-
-                <h3>Example</h3>
-
-                <p>
-                    If you bench press 60 kg for 10 repetitions:
-                </p>
-
-                <br>
-
-                <p>
-                    60 × (1 + 10 ÷ 30)
-                </p>
-
-                <br>
-
-                <p>
-                    Estimated 1RM ≈ 80 kg
-                </p>
-
-            </div>
-
-
-            <h2>Why Calculate Your Bench Press 1RM?</h2>
-
-            <ul>
-                <li>Track your strength progress.</li>
-                <li>Estimate your maximum strength without testing a true maximum.</li>
-                <li>Calculate training weights based on percentages.</li>
-                <li>Compare your performance between different training periods.</li>
-            </ul>
-
-
-            <h2>Important Note</h2>
-
-            <p>
-                A calculated 1RM is only an estimate. Your actual maximum
-                can vary depending on technique, fatigue, experience,
-                equipment and other factors.
-            </p>
-
-
-            <a class="button" href="index.html">
-                Open 1RM Calculator
-            </a>
 
         </div>
+
+    </section>
+
+
+    <!-- =========================
+         STRENGTH RANK
+    ========================= -->
+
+    <section id="strength-rank">
+
+        <div class="container">
+
+            <div class="strength-rank">
+
+                <div class="rank-header">
+
+                    <div class="rank-badge">
+                        STRENGTH RANK
+                    </div>
+
+                    <h2>What's Your Strength Tier?</h2>
+
+                    <p>
+                        Enter your bodyweight and 1RM to see your strength level.
+                    </p>
+
+                </div>
+
+
+                <!-- RANK INPUT -->
+
+                <div class="rank-input-grid">
+
+                    <div class="rank-input-group">
+
+                        <label for="rank-bodyweight">
+                            Bodyweight
+                        </label>
+
+                        <input
+                            id="rank-bodyweight"
+                            type="number"
+                            min="1"
+                            step="0.1"
+                            placeholder="65"
+                        >
+
+                    </div>
+
+
+                    <div class="rank-input-group">
+
+                        <label for="rank-bench">
+                            Bench Press 1RM
+                        </label>
+
+                        <input
+                            id="rank-bench"
+                            type="number"
+                            min="0"
+                            step="0.5"
+                            placeholder="80"
+                        >
+
+                    </div>
+
+
+                    <div class="rank-input-group">
+
+                        <label for="rank-squat">
+                            Squat 1RM
+                        </label>
+
+                        <input
+                            id="rank-squat"
+                            type="number"
+                            min="0"
+                            step="0.5"
+                            placeholder="100"
+                        >
+
+                    </div>
+
+
+                    <div class="rank-input-group">
+
+                        <label for="rank-deadlift">
+                            Deadlift 1RM
+                        </label>
+
+                        <input
+                            id="rank-deadlift"
+                            type="number"
+                            min="0"
+                            step="0.5"
+                            placeholder="120"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    class="rank-calculate-btn"
+                    onclick="calculateStrengthRank()"
+                >
+                    Calculate My Strength Rank
+                </button>
+
+
+                <!-- RANK RESULT -->
+
+                <div
+                    class="rank-result"
+                    id="rank-result"
+                >
+
+                    <div class="overall-rank">
+
+                        <div class="overall-label">
+                            OVERALL STRENGTH
+                        </div>
+
+                        <div
+                            class="overall-tier"
+                            id="overall-tier"
+                        >
+                            —
+                        </div>
+
+                        <div
+                            class="overall-score"
+                            id="overall-score"
+                        >
+                            —
+                        </div>
+
+                    </div>
+
+
+                    <div class="lift-results">
+
+                        <!-- BENCH -->
+
+                        <div class="lift-card">
+
+                            <div class="lift-title">
+
+                                <span>
+                                    Bench Press
+                                </span>
+
+                                <strong id="bench-rank">
+                                    —
+                                </strong>
+
+                            </div>
+
+
+                            <div class="lift-ratio">
+
+                                <span id="bench-ratio">
+                                    0.00×
+                                </span>
+
+                            </div>
+
+                            <div class="lift-ratio-label">
+                                Bodyweight Ratio
+                            </div>
+
+
+                            <div class="rank-progress">
+
+                                <div
+                                    class="rank-progress-bar"
+                                    id="bench-progress"
+                                ></div>
+
+                            </div>
+
+
+                            <div
+                                class="next-tier"
+                                id="bench-next"
+                            >
+                                Enter your 1RM
+                            </div>
+
+                        </div>
+
+
+                        <!-- SQUAT -->
+
+                        <div class="lift-card">
+
+                            <div class="lift-title">
+
+                                <span>
+                                    Squat
+                                </span>
+
+                                <strong id="squat-rank">
+                                    —
+                                </strong>
+
+                            </div>
+
+
+                            <div class="lift-ratio">
+
+                                <span id="squat-ratio">
+                                    0.00×
+                                </span>
+
+                            </div>
+
+                            <div class="lift-ratio-label">
+                                Bodyweight Ratio
+                            </div>
+
+
+                            <div class="rank-progress">
+
+                                <div
+                                    class="rank-progress-bar"
+                                    id="squat-progress"
+                                ></div>
+
+                            </div>
+
+
+                            <div
+                                class="next-tier"
+                                id="squat-next"
+                            >
+                                Enter your 1RM
+                            </div>
+
+                        </div>
+
+
+                        <!-- DEADLIFT -->
+
+                        <div class="lift-card">
+
+                            <div class="lift-title">
+
+                                <span>
+                                    Deadlift
+                                </span>
+
+                                <strong id="deadlift-rank">
+                                    —
+                                </strong>
+
+                            </div>
+
+
+                            <div class="lift-ratio">
+
+                                <span id="deadlift-ratio">
+                                    0.00×
+                                </span>
+
+                            </div>
+
+                            <div class="lift-ratio-label">
+                                Bodyweight Ratio
+                            </div>
+
+
+                            <div class="rank-progress">
+
+                                <div
+                                    class="rank-progress-bar"
+                                    id="deadlift-progress"
+                                ></div>
+
+                            </div>
+
+
+                            <div
+                                class="next-tier"
+                                id="deadlift-next"
+                            >
+                                Enter your 1RM
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- TOTAL -->
+
+                    <div class="total-strength">
+
+                        <div class="total-box">
+
+                            <span>
+                                TOTAL 1RM
+                            </span>
+
+                            <strong id="total-1rm">
+                                0 kg
+                            </strong>
+
+                        </div>
+
+
+                        <div class="total-box">
+
+                            <span>
+                                TOTAL / BODYWEIGHT
+                            </span>
+
+                            <strong id="total-ratio">
+                                0.00×
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- TIER TABLE -->
+
+                    <div class="tier-table">
+
+                        <h3>
+                            Strength Tier System
+                        </h3>
+
+
+                        <div class="tier-row">
+
+                            <span class="tier-icon">
+                                I
+                            </span>
+
+                            <div>
+                                <strong>Bronze</strong>
+                                <small>Beginner</small>
+                            </div>
+
+                        </div>
+
+
+                        <div class="tier-row">
+
+                            <span class="tier-icon">
+                                II
+                            </span>
+
+                            <div>
+                                <strong>Silver</strong>
+                                <small>Novice</small>
+                            </div>
+
+                        </div>
+
+
+                        <div class="tier-row">
+
+                            <span class="tier-icon">
+                                III
+                            </span>
+
+                            <div>
+                                <strong>Gold</strong>
+                                <small>Intermediate</small>
+                            </div>
+
+                        </div>
+
+
+                        <div class="tier-row">
+
+                            <span class="tier-icon">
+                                IV
+                            </span>
+
+                            <div>
+                                <strong>Platinum</strong>
+                                <small>Advanced</small>
+                            </div>
+
+                        </div>
+
+
+                        <div class="tier-row">
+
+                            <span class="tier-icon">
+                                V
+                            </span>
+
+                            <div>
+                                <strong>Diamond</strong>
+                                <small>Very Advanced</small>
+                            </div>
+
+                        </div>
+
+
+                        <div class="tier-row">
+
+                            <span class="tier-icon">
+                                VI
+                            </span>
+
+                            <div>
+                                <strong>Elite</strong>
+                                <small>Exceptional</small>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- REQUIRED LINK -->
+
+                    <div class="seo-links">
+
+                        <a
+                            href="https://sigor11.github.io/sigor.github.io/bench-press-1rm.html"
+                        >
+                            Calculate Bench Press 1RM →
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         ADVERTISEMENT
+    ========================= -->
+
+    <div class="container">
+
+        <div class="ad-space">
+            ADVERTISEMENT
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         WORKOUT HISTORY
+    ========================= -->
+
+    <section id="history">
+
+        <div class="container">
+
+            <div class="history">
+
+                <div class="history-header">
+
+                    <h2>
+                        Workout History
+                    </h2>
+
+                    <button
+                        class="clear-btn"
+                        onclick="clearHistory()"
+                    >
+                        Clear All
+                    </button>
+
+                </div>
+
+
+                <div id="historyList"></div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         ABOUT
+    ========================= -->
+
+    <section id="about" class="section">
+
+        <div class="container">
+
+            <h2>
+                What is 1RM?
+            </h2>
+
+            <p>
+                1RM stands for One Rep Max. It is the maximum amount of weight
+                you can theoretically lift for one repetition with proper form.
+                Your 1RM can be useful for estimating strength and planning
+                training weights.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         HOW IT WORKS
+    ========================= -->
+
+    <section class="section">
+
+        <div class="container">
+
+            <h2>
+                How Does the Calculator Work?
+            </h2>
+
+            <p>
+                This calculator uses the Epley formula to estimate your one rep max.
+            </p>
+
+            <br>
+
+            <p>
+                <strong>
+                    1RM = Weight × (1 + Reps ÷ 30)
+                </strong>
+            </p>
+
+            <br>
+
+            <p>
+                Example: If you bench press 60 kg for 10 repetitions,
+                the estimated 1RM is approximately 80 kg.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         FAQ
+    ========================= -->
+
+    <section id="faq" class="section">
+
+        <div class="container">
+
+            <h2>
+                Frequently Asked Questions
+            </h2>
+
+
+            <div class="faq-item">
+
+                <h3>
+                    Is the calculated 1RM exact?
+                </h3>
+
+                <p>
+                    No. It is an estimate based on your weight and repetitions.
+                    Your actual one rep max may be different.
+                </p>
+
+            </div>
+
+
+            <div class="faq-item">
+
+                <h3>
+                    Which exercises can I calculate?
+                </h3>
+
+                <p>
+                    The calculator currently supports Bench Press, Squat and Deadlift.
+                </p>
+
+            </div>
+
+
+            <div class="faq-item">
+
+                <h3>
+                    Where are my workout records stored?
+                </h3>
+
+                <p>
+                    Your workout history is stored locally in your browser.
+                    The records are not uploaded to our server.
+                </p>
+
+            </div>
+
+
+            <div class="faq-item">
+
+                <h3>
+                    Can I use this calculator on my phone?
+                </h3>
+
+                <p>
+                    Yes. The website is designed to work on both desktop and mobile devices.
+                </p>
+
+            </div>
+
+        </div>
+
     </section>
 
 </main>
 
+
+<!-- =========================
+     FOOTER
+========================= -->
+
 <footer>
-    <p>© 2026 1RM Calculator</p>
+
+    <p>
+        © 2026 1RM Calculator. All rights reserved.
+    </p>
+
     <br>
-    <a href="privacy.html">Privacy Policy</a>
+
+    <a href="privacy.html">
+        Privacy Policy
+    </a>
+
+    <a href="#faq">
+        FAQ
+    </a>
+
 </footer>
+
+
+<script>
+
+    /* =====================================================
+       CALCULATOR
+    ===================================================== */
+
+    let selectedExercise = "Bench Press";
+
+    let currentWorkout = null;
+
+
+    function selectExercise(exercise, button) {
+
+        selectedExercise = exercise;
+
+        document
+            .querySelectorAll(".exercise-btn")
+            .forEach(btn => btn.classList.remove("active"));
+
+        button.classList.add("active");
+
+    }
+
+
+    function calculate1RM() {
+
+        const weightInput =
+            document.getElementById("weight");
+
+        const repsInput =
+            document.getElementById("reps");
+
+
+        const weight =
+            parseFloat(weightInput.value);
+
+        const reps =
+            parseInt(repsInput.value);
+
+
+        if (!weight || weight <= 0) {
+
+            alert("Please enter a valid weight.");
+
+            return;
+
+        }
+
+
+        if (!reps || reps < 1 || reps > 30) {
+
+            alert("Please enter between 1 and 30 reps.");
+
+            return;
+
+        }
+
+
+        /*
+            Epley Formula
+
+            1RM = Weight × (1 + Reps / 30)
+        */
+
+        const oneRM =
+            weight * (1 + reps / 30);
+
+
+        const rounded1RM =
+            Math.round(oneRM * 10) / 10;
+
+
+        document.getElementById("oneRM").textContent =
+            rounded1RM + " kg";
+
+
+        /* Training percentages */
+
+        const percentages = [
+            50,
+            60,
+            70,
+            75,
+            80,
+            85,
+            90,
+            95,
+            100
+        ];
+
+
+        const table =
+            document.getElementById("trainingTable");
+
+
+        table.innerHTML = "";
+
+
+        percentages.forEach(percent => {
+
+            const trainingWeight =
+                Math.round(
+                    (oneRM * percent / 100) * 2
+                ) / 2;
+
+
+            const row =
+                document.createElement("tr");
+
+
+            row.innerHTML = `
+                <td>${percent}%</td>
+                <td>${trainingWeight} kg</td>
+            `;
+
+
+            table.appendChild(row);
+
+        });
+
+
+        currentWorkout = {
+
+            exercise: selectedExercise,
+
+            weight: weight,
+
+            reps: reps,
+
+            oneRM: rounded1RM
+
+        };
+
+
+        document.getElementById("result").style.display =
+            "block";
+
+
+        document.getElementById("saveBtn").style.display =
+            "block";
+
+    }
+
+
+    /* =====================================================
+       STRENGTH RANK
+    ===================================================== */
+
+    /*
+        Strength is calculated using:
+
+        1RM / Bodyweight
+
+        This makes the system more useful when comparing
+        lifters with different bodyweights.
+
+        These are site-specific reference tiers,
+        not an official universal strength standard.
+    */
+
+
+    const tierData = {
+
+        bench: [
+
+            {
+                name: "Bronze",
+                min: 0
+            },
+
+            {
+                name: "Silver",
+                min: 0.60
+            },
+
+            {
+                name: "Gold",
+                min: 0.85
+            },
+
+            {
+                name: "Platinum",
+                min: 1.10
+            },
+
+            {
+                name: "Diamond",
+                min: 1.40
+            },
+
+            {
+                name: "Elite",
+                min: 1.70
+            }
+
+        ],
+
+
+        squat: [
+
+            {
+                name: "Bronze",
+                min: 0
+            },
+
+            {
+                name: "Silver",
+                min: 0.80
+            },
+
+            {
+                name: "Gold",
+                min: 1.10
+            },
+
+            {
+                name: "Platinum",
+                min: 1.50
+            },
+
+            {
+                name: "Diamond",
+                min: 1.90
+            },
+
+            {
+                name: "Elite",
+                min: 2.30
+            }
+
+        ],
+
+
+        deadlift: [
+
+            {
+                name: "Bronze",
+                min: 0
+            },
+
+            {
+                name: "Silver",
+                min: 1.00
+            },
+
+            {
+                name: "Gold",
+                min: 1.30
+            },
+
+            {
+                name: "Platinum",
+                min: 1.70
+            },
+
+            {
+                name: "Diamond",
+                min: 2.10
+            },
+
+            {
+                name: "Elite",
+                min: 2.50
+            }
+
+        ]
+
+    };
+
+
+    function getTier(ratio, type) {
+
+        const tiers =
+            tierData[type];
+
+
+        let current =
+            tiers[0];
+
+
+        let index =
+            0;
+
+
+        for (
+            let i = 0;
+            i < tiers.length;
+            i++
+        ) {
+
+            if (
+                ratio >= tiers[i].min
+            ) {
+
+                current =
+                    tiers[i];
+
+                index =
+                    i;
+
+            }
+
+        }
+
+
+        return {
+
+            name: current.name,
+
+            index: index,
+
+            tiers: tiers
+
+        };
+
+    }
+
+
+    function getTierEmoji(tier) {
+
+        const emojis = {
+
+            Bronze: "🪨",
+
+            Silver: "🥈",
+
+            Gold: "🥇",
+
+            Platinum: "💎",
+
+            Diamond: "🔥",
+
+            Elite: "👑"
+
+        };
+
+
+        return emojis[tier] || "";
+
+    }
+
+
+    function getNextTierText(
+        ratio,
+        type,
+        bodyweight
+    ) {
+
+        const result =
+            getTier(
+                ratio,
+                type
+            );
+
+
+        const tiers =
+            result.tiers;
+
+
+        if (
+            result.index >=
+            tiers.length - 1
+        ) {
+
+            return "You've reached the highest tier!";
+
+        }
+
+
+        const next =
+            tiers[
+                result.index + 1
+            ];
+
+
+        const requiredWeight =
+            next.min * bodyweight;
+
+
+        return (
+            Math.ceil(requiredWeight) +
+            " kg needed for " +
+            next.name
+        );
+
+    }
+
+
+    function setProgress(
+        elementId,
+        ratio,
+        type
+    ) {
+
+        const tiers =
+            tierData[type];
+
+
+        const max =
+            tiers[
+                tiers.length - 1
+            ].min;
+
+
+        let percentage =
+            (ratio / max) * 100;
+
+
+        percentage =
+            Math.min(
+                100,
+                Math.max(
+                    3,
+                    percentage
+                )
+            );
+
+
+        document.getElementById(
+            elementId
+        ).style.width =
+            percentage + "%";
+
+    }
+
+
+    function calculateStrengthRank() {
+
+        const bodyweight =
+            parseFloat(
+                document.getElementById(
+                    "rank-bodyweight"
+                ).value
+            );
+
+
+        const bench =
+            parseFloat(
+                document.getElementById(
+                    "rank-bench"
+                ).value
+            );
+
+
+        const squat =
+            parseFloat(
+                document.getElementById(
+                    "rank-squat"
+                ).value
+            );
+
+
+        const deadlift =
+            parseFloat(
+                document.getElementById(
+                    "rank-deadlift"
+                ).value
+            );
+
+
+        if (
+            !bodyweight ||
+            bodyweight <= 0 ||
+            isNaN(bench) ||
+            bench < 0 ||
+            isNaN(squat) ||
+            squat < 0 ||
+            isNaN(deadlift) ||
+            deadlift < 0
+        ) {
+
+            alert(
+                "Please enter your bodyweight and all three 1RM values."
+            );
+
+            return;
+
+        }
+
+
+        /* Ratios */
+
+        const benchRatio =
+            bench / bodyweight;
+
+
+        const squatRatio =
+            squat / bodyweight;
+
+
+        const deadliftRatio =
+            deadlift / bodyweight;
+
+
+        /* Tiers */
+
+        const benchTier =
+            getTier(
+                benchRatio,
+                "bench"
+            );
+
+
+        const squatTier =
+            getTier(
+                squatRatio,
+                "squat"
+            );
+
+
+        const deadliftTier =
+            getTier(
+                deadliftRatio,
+                "deadlift"
+            );
+
+
+        /* Individual results */
+
+        document.getElementById(
+            "bench-rank"
+        ).textContent =
+            getTierEmoji(
+                benchTier.name
+            ) +
+            " " +
+            benchTier.name;
+
+
+        document.getElementById(
+            "squat-rank"
+        ).textContent =
+            getTierEmoji(
+                squatTier.name
+            ) +
+            " " +
+            squatTier.name;
+
+
+        document.getElementById(
+            "deadlift-rank"
+        ).textContent =
+            getTierEmoji(
+                deadliftTier.name
+            ) +
+            " " +
+            deadliftTier.name;
+
+
+        document.getElementById(
+            "bench-ratio"
+        ).textContent =
+            benchRatio.toFixed(2) +
+            "×";
+
+
+        document.getElementById(
+            "squat-ratio"
+        ).textContent =
+            squatRatio.toFixed(2) +
+            "×";
+
+
+        document.getElementById(
+            "deadlift-ratio"
+        ).textContent =
+            deadliftRatio.toFixed(2) +
+            "×";
+
+
+        /* Progress bars */
+
+        setProgress(
+            "bench-progress",
+            benchRatio,
+            "bench"
+        );
+
+
+        setProgress(
+            "squat-progress",
+            squatRatio,
+            "squat"
+        );
+
+
+        setProgress(
+            "deadlift-progress",
+            deadliftRatio,
+            "deadlift"
+        );
+
+
+        /* Next tier */
+
+        document.getElementById(
+            "bench-next"
+        ).textContent =
+            getNextTierText(
+                benchRatio,
+                "bench",
+                bodyweight
+            );
+
+
+        document.getElementById(
+            "squat-next"
+        ).textContent =
+            getNextTierText(
+                squatRatio,
+                "squat",
+                bodyweight
+            );
+
+
+        document.getElementById(
+            "deadlift-next"
+        ).textContent =
+            getNextTierText(
+                deadliftRatio,
+                "deadlift",
+                bodyweight
+            );
+
+
+        /* Total */
+
+        const total =
+            bench +
+            squat +
+            deadlift;
+
+
+        const totalRatio =
+            total / bodyweight;
+
+
+        document.getElementById(
+            "total-1rm"
+        ).textContent =
+            total.toFixed(1) +
+            " kg";
+
+
+        document.getElementById(
+            "total-ratio"
+        ).textContent =
+            totalRatio.toFixed(2) +
+            "×";
+
+
+        /* Overall score */
+
+        const score =
+            (
+                benchTier.index +
+                squatTier.index +
+                deadliftTier.index
+            ) / 3;
+
+
+        let overallTier;
+
+
+        if (score < 1) {
+
+            overallTier =
+                "Bronze";
+
+        } else if (score < 2) {
+
+            overallTier =
+                "Silver";
+
+        } else if (score < 3) {
+
+            overallTier =
+                "Gold";
+
+        } else if (score < 4) {
+
+            overallTier =
+                "Platinum";
+
+        } else if (score < 5) {
+
+            overallTier =
+                "Diamond";
+
+        } else {
+
+            overallTier =
+                "Elite";
+
+        }
+
+
+        document.getElementById(
+            "overall-tier"
+        ).textContent =
+            getTierEmoji(
+                overallTier
+            ) +
+            " " +
+            overallTier;
+
+
+        document.getElementById(
+            "overall-score"
+        ).textContent =
+            "Strength Score: " +
+            score.toFixed(2) +
+            " / 5.00";
+
+
+        document.getElementById(
+            "rank-result"
+        ).style.display =
+            "block";
+
+    }
+
+
+    /* =====================================================
+       WORKOUT HISTORY
+    ===================================================== */
+
+    function getWorkoutHistory() {
+
+        const saved =
+            localStorage.getItem(
+                "oneRMWorkoutHistory"
+            );
+
+
+        if (!saved) {
+
+            return [];
+
+        }
+
+
+        try {
+
+            return JSON.parse(saved);
+
+        } catch {
+
+            return [];
+
+        }
+
+    }
+
+
+    function saveWorkout() {
+
+        if (!currentWorkout) {
+
+            alert(
+                "Please calculate your 1RM first."
+            );
+
+            return;
+
+        }
+
+
+        const history =
+            getWorkoutHistory();
+
+
+        const workout = {
+
+            id: Date.now(),
+
+            exercise:
+                currentWorkout.exercise,
+
+            weight:
+                currentWorkout.weight,
+
+            reps:
+                currentWorkout.reps,
+
+            oneRM:
+                currentWorkout.oneRM,
+
+            date:
+                new Date().toISOString()
+
+        };
+
+
+        history.unshift(workout);
+
+
+        localStorage.setItem(
+            "oneRMWorkoutHistory",
+            JSON.stringify(history)
+        );
+
+
+        renderHistory();
+
+
+        alert(
+            "Workout saved!"
+        );
+
+    }
+
+
+    function renderHistory() {
+
+        const historyList =
+            document.getElementById(
+                "historyList"
+            );
+
+
+        const history =
+            getWorkoutHistory();
+
+
+        if (
+            history.length === 0
+        ) {
+
+            historyList.innerHTML = `
+
+                <div class="empty-history">
+
+                    No workouts saved yet.<br>
+
+                    Calculate your 1RM and save your workout.
+
+                </div>
+
+            `;
+
+            return;
+
+        }
+
+
+        historyList.innerHTML =
+            "";
+
+
+        history.forEach(
+            workout => {
+
+                const item =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                item.className =
+                    "history-item";
+
+
+                const date =
+                    new Date(
+                        workout.date
+                    );
+
+
+                const formattedDate =
+                    date.toLocaleDateString(
+                        "en-US",
+                        {
+                            year: "numeric",
+                            month: "short",
+                            day: "numeric"
+                        }
+                    );
+
+
+                item.innerHTML = `
+
+                    <div class="history-top">
+
+                        <div class="history-exercise">
+
+                            ${escapeHTML(
+                                workout.exercise
+                            )}
+
+                        </div>
+
+                        <div class="history-date">
+
+                            ${formattedDate}
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="history-details">
+
+                        ${workout.weight}
+                        kg ×
+                        ${workout.reps}
+                        reps
+
+                    </div>
+
+
+                    <div class="history-rm">
+
+                        Estimated 1RM:
+                        ${workout.oneRM}
+                        kg
+
+                    </div>
+
+
+                    <button
+                        class="delete-btn"
+                        onclick="deleteWorkout(${workout.id})"
+                    >
+                        Delete
+                    </button>
+
+                `;
+
+
+                historyList.appendChild(
+                    item
+                );
+
+            }
+        );
+
+    }
+
+
+    function deleteWorkout(id) {
+
+        const history =
+            getWorkoutHistory();
+
+
+        const newHistory =
+            history.filter(
+                workout =>
+                    workout.id !== id
+            );
+
+
+        localStorage.setItem(
+            "oneRMWorkoutHistory",
+            JSON.stringify(
+                newHistory
+            )
+        );
+
+
+        renderHistory();
+
+    }
+
+
+    function clearHistory() {
+
+        const history =
+            getWorkoutHistory();
+
+
+        if (
+            history.length === 0
+        ) {
+
+            return;
+
+        }
+
+
+        const confirmed =
+            confirm(
+                "Are you sure you want to delete all workout records?"
+            );
+
+
+        if (!confirmed) {
+
+            return;
+
+        }
+
+
+        localStorage.removeItem(
+            "oneRMWorkoutHistory"
+        );
+
+
+        renderHistory();
+
+    }
+
+
+    /* =====================================================
+       SECURITY HELPER
+    ===================================================== */
+
+    function escapeHTML(value) {
+
+        return String(value)
+
+            .replace(
+                /&/g,
+                "&amp;"
+            )
+
+            .replace(
+                /</g,
+                "&lt;"
+            )
+
+            .replace(
+                />/g,
+                "&gt;"
+            )
+
+            .replace(
+                /"/g,
+                "&quot;"
+            )
+
+            .replace(
+                /'/g,
+                "&#039;"
+            );
+
+    }
+
+
+    /* =====================================================
+       LOAD HISTORY
+    ===================================================== */
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        function() {
+
+            renderHistory();
+
+        }
+    );
+
+</script>
 
 </body>
 </html>
+```
